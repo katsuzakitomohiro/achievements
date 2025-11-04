@@ -1,0 +1,107 @@
+{
+  // ==================================================
+  // エディタ設定
+  // ==================================================
+
+  "[tex]":   { 
+    "editor.tabSize": 2, 
+    "editor.suggest.snippetsPreventQuickSuggestions": false
+   },
+  "[latex]": { 
+    "editor.tabSize": 2, 
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.rulers": [52],
+    "editor.wordWrap": "off"
+  },
+  "[bibtex]":{ "editor.tabSize": 2 },
+
+  // ==================================================
+  // LaTeX Workshop: ビルドツール定義
+  // ==================================================
+
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk-lualatex",
+      "command": "latexmk",
+      "args": [
+        "%DOCFILE%"                                      // ドキュメントファイル
+      ],
+      "cwd": "%DIR%"                                     // 作業ディレクトリをファイルのディレクトリに設定
+    }
+  ],
+
+  // ==================================================
+  // LaTeX Workshop: レシピ（実行手順）
+  // ==================================================
+
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "lualatex",
+      "tools": ["latexmk-lualatex"]
+    }
+  ],
+
+  // ==================================================
+  // LaTeX Workshop: 自動実行設定
+  // ==================================================
+
+  "latex-workshop.latex.recipe.default": "lualatex",
+  "latex-workshop.latex.autoBuild.run": "onSave",        // 保存時に自動ビルド
+  "latex-workshop.latex.autoClean.run": "onBuilt",       // ビルド後に自動クリーン
+  "latex-workshop.latex.clean.method": "glob",           // glob パターンでクリーンアップ
+  "latex-workshop.latex.outDir": "%DIR%/build",          // ファイルのディレクトリ配下のbuildフォルダ
+
+  // ==================================================
+  // LaTeX Workshop: クリーンアップ設定
+  // ==================================================
+
+  // 注意: *.synctex.gz と *.log は削除しない（デバッグ用に保持）
+  // .texmf-cache は LuaTeX キャッシュのため保持
+
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux","*.bbl","*.bcf","*.blg","*.run.xml","*.biber.*",
+    "*.acn","*.acr","*.alg",
+    "*.set","*.sto","*.slg","*.ind","*.ino","*.ilg",
+    "*.par","*.pro","*.prg","*.var","*.vro","*.vrg",
+    "*.lof","*.lot","*.out","*.toc",
+    "*.fls","*.fdb_latexmk",
+    "*.glstex","*.glg"
+  ],
+  "latex-workshop.latex.clean.subfolder.enabled": true,
+
+  // ==================================================
+  // PDFビューア設定
+  // ==================================================
+
+  "workbench.editorAssociations": {
+    "*.pdf": "latex-workshop-pdf-hook"
+  },
+
+  // ==================================================
+  // Todo Tree設定（BibTeX，LaTeXファイル対応）
+  // ==================================================
+  
+  "todo-tree.general.tags": [
+    "BUG",
+    "HACK",
+    "FIXME",
+    "TODO",
+    "XXX",
+    "[ ]",
+    "[x]"
+  ],
+  "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+\\.)\\s*|%\\s*)($TAGS)",
+  "todo-tree.general.statusBar": "tags",
+  "todo-tree.filtering.includeGlobs": [
+    "**/*.md",
+    "**/*.tex",
+    "**/*.bib",
+    "**/*.js",
+    "**/*.ts",
+    "**/*.py",
+    "**/*.c",
+    "**/*.cpp",
+    "**/*.h"
+  ],
+  "todo-tree.general.debug": false
+}

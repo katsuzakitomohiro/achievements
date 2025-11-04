@@ -1,0 +1,120 @@
+% ==================================================
+% プリアンブル設定ファイル
+% パッケージ読み込み・基本設定
+% ==================================================
+
+% --------------------------------------------------
+% 日本語フォント設定
+% --------------------------------------------------
+
+\usepackage[haranoaji]{luatexja-preset}
+
+% --------------------------------------------------
+% 欧文フォント設定（クロスプラットフォーム対応）
+% --------------------------------------------------
+
+\usepackage{fontspec}
+\IfFontExistsTF{Times New Roman}{
+  % Windows環境
+  \setmainfont{Times New Roman}
+  \setsansfont{Arial}
+  \setmonofont{Courier New}
+}{
+  % Linux/macOS環境
+  \IfFontExistsTF{Liberation Serif}{
+    % Liberation Fonts（Times New Romanに近似）
+    \setmainfont{Liberation Serif}
+    \setsansfont{Liberation Sans}
+    \setmonofont{Liberation Mono}
+  }{
+    % TeX Gyre Fonts（TeX Live標準フォント）
+    \setmainfont{TeX Gyre Termes}                     % Times New Roman互換
+    \setsansfont{TeX Gyre Heros}                      % Arial互換
+    \setmonofont{TeX Gyre Cursor}                     % Courier New互換
+  }
+}
+
+% --------------------------------------------------
+% 表関連（biblatex内部で使用される可能性あり）
+% --------------------------------------------------
+
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{tabularx}
+
+% --------------------------------------------------
+% ハイパーリンク・相互参照
+% --------------------------------------------------
+
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue,
+  pdflang={ja-JP}
+}
+
+% --------------------------------------------------
+% 業績一覧設定
+% --------------------------------------------------
+
+\usepackage{ifthen}
+\usepackage[
+  backend=biber, style=ieee, sorting=none,
+  maxbibnames=99, giveninits=true, doi=true,
+  url=true, eprint=true, date=iso, urldate=iso,
+  seconds=true
+]{biblatex}
+
+% 日本語文献用の著者名フォーマット
+% （姓名順，フルネーム，姓名スペースなし，andなし）
+\DeclareNameFormat{japanese-names}{%
+  \namepartfamily
+  \ifdefvoid{\namepartgiven}{}{\namepartgiven}%
+  \ifthenelse{\value{listcount}<\value{liststop}}
+    {\addcomma\space}
+    {}%
+}
+
+% 日本語文献用のフィールドフォーマット（強調なし）
+\DeclareFieldFormat[article]{
+  journaltitle:japanese}{#1}
+\DeclareFieldFormat[inproceedings]{
+  booktitle:japanese}{#1}
+\DeclareFieldFormat[book]{title:japanese}{#1}
+
+% 日本語会議論文で"in: "を削除
+\renewbibmacro*{in:}{%
+  \iffieldequalstr{langid}{japanese}
+    {}
+    {\printtext{\bibstring{in}\intitlepunct}}%
+}
+
+% 著者名と強調の切り替え
+\AtEveryBibitem{%
+  \iffieldequalstr{langid}{japanese}{%
+    \DeclareNameAlias{author}{japanese-names}%
+    \DeclareFieldAlias{journaltitle}{
+      journaltitle:japanese}%
+    \DeclareFieldAlias{booktitle}{
+      booktitle:japanese}%
+    \DeclareFieldAlias{title}{title:japanese}%
+  }{}%
+}
+
+% --------------------------------------------------
+% 目次設定
+% --------------------------------------------------
+
+\renewcommand{\contentsname}{目次}
+
+% 目次に目次自身を含める
+\usepackage{tocbibind}
+
+% --------------------------------------------------
+% マイクロタイポグラフィ
+% --------------------------------------------------
+
+\usepackage{microtype}
