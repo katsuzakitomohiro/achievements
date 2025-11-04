@@ -37,8 +37,13 @@ achievements/
         │       ├── awards.bib
         │       └── qualifications.bib
         └── build/                  # ビルド出力ディレクトリ
-            └── main.pdf            # 生成されたPDF
+            ├── .texmf-cache/       # LuaTeXフォントキャッシュ（Git管理対象外）
+            ├── main.pdf            # 生成されたPDF（Git管理対象）
+            ├── main.log            # ビルドログ（Git管理対象外）
+            └── main.synctex.gz     # SyncTeX同期ファイル（Git管理対象）
 ```
+
+**注**: `build/` ディレクトリはGit管理されますが，`*.log` や `.texmf-cache/` などの補助ファイル・ディレクトリは `.gitignore` により管理対象外です。
 
 ## 必要環境
 
@@ -49,7 +54,14 @@ achievements/
 
 ## ビルド方法
 
-### 基本的なビルド
+### VS Codeでのビルド（推奨）
+
+LaTeX Workshop拡張機能を使用している場合，TeXファイルを保存（Ctrl+S / Cmd+S）するだけで自動的にビルドとクリーンアップが実行されます。
+
+- **自動ビルド**: ファイル保存時に実行
+- **自動クリーンアップ**: ビルド後に補助ファイルを自動削除（[.vscode/settings.json:50](.vscode/settings.json#L50), [61-69](.vscode/settings.json#L61-L69)）
+
+### コマンドラインでのビルド
 
 プロジェクトルートから以下のコマンドを実行:
 
@@ -59,6 +71,8 @@ latexmk main.tex
 ```
 
 生成されたPDFは`src/latex/build/main.pdf`に出力されます。
+
+**注**: コマンドラインビルドでは，[.latexmkrc](.latexmkrc) の設定に基づく最小限のクリーンアップのみが実行されます。完全なクリーンアップにはVS Codeの使用を推奨します。
 
 ### クリーンビルド
 
