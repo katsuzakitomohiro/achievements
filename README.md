@@ -40,10 +40,10 @@ achievements/
             ├── .texmf-cache/       # LuaTeXフォントキャッシュ（Git管理対象外）
             ├── main.pdf            # 生成されたPDF（Git管理対象）
             ├── main.log            # ビルドログ（Git管理対象外）
-            └── main.synctex.gz     # SyncTeX同期ファイル（Git管理対象）
+            └── main.synctex.gz     # SyncTeX同期ファイル（Git管理対象外）
 ```
 
-**注**: `build/` ディレクトリはGit管理されますが，`*.log` や `.texmf-cache/` などの補助ファイル・ディレクトリは `.gitignore` により管理対象外です。
+**注**: `build/` ディレクトリはGit管理されますが，`*.log`，`*.synctex.gz`，`.texmf-cache/` などの補助ファイル・ディレクトリは `.gitignore` により管理対象外です。
 
 ## 必要環境
 
@@ -128,6 +128,23 @@ latexmk -pvc main.tex
 - **日本語**: 読点「，」（全角カンマ），句点「。」（全角句点）
 - **英語**: カンマ「, 」（半角カンマ + スペース），ピリオド「. 」（半角ピリオド + スペース）
 
+## 公開にあたって
+
+このリポジトリは，著者の業績一覧（CV）を組版するためのLaTeXソースとビルド設定を公開するものです。収録しているのは，学術論文・国際会議・国内会議・受賞・学術活動・社会貢献・資格といった，公表済みの業績情報に限られます。連絡先・住所・学籍番号などの個人情報は含みません。
+
+業績データの内容は随時更新されるため，最新の状態は `src/latex/build/main.pdf` を参照してください。
+
 ## ライセンス
 
-このプロジェクトは個人の業績管理用です。
+このリポジトリは，内容に応じて2種類の扱いを設けています。
+
+### LaTeXソース・スクリプト・設定（MIT License）
+
+`src/latex/main.tex`，`src/latex/config/`，`src/latex/contents/`，`src/latex/.latexmkrc`，`.vscode/settings.json`，`.gitignore` などの組版の仕組みにあたる部分は，MIT Licenseで提供します。詳細は[LICENSE](LICENSE)を参照してください。業績一覧を作成するためのテンプレートとして，自由に複製・改変・再配布できます。
+
+### 業績データ・生成PDF（All rights reserved）
+
+`src/latex/bibliography/**/*.bib` に収録した業績データの本文と，そこから生成した `src/latex/build/main.pdf` は，著作権を著者が留保します（All rights reserved）。
+
+- 出典を明示した引用・参照は，許諾なく行えます。
+- 全体または相当部分の複製・再配布・改変版の公開には，著者の許諾が必要です。

@@ -39,8 +39,8 @@
 *.glg
 
 # SyncTeX（PDF-TeX間ジャンプ用）
-# 注意: *.synctex.gz を除外する場合は以下をアンコメント:
-# *.synctex.gz
+# ビルド環境のローカル絶対パスを含むため，Git管理対象外とする
+*.synctex.gz
 
 # その他のLaTeX関連
 *.dvi
